@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Developer {
+  id      Int      @id @default(autoincrement())
+  address String
+  tasks   Task[]
+  Total_spent Int @default(10)
+}
+
+model Validator {
+  id             Int          @id @default(autoincrement())
+  address        String
+  sol_Withdrawn  Int         @default(0)
+  sol_Withdrawable Int          @default(0)
+  submissions    Submission[]
+  payouts Payout[]
+  
+}
+
+model Task {
+  id             Int          @id @default(autoincrement())
+  title          String
+  developer_Id   Int
+  signature      String
+  amount         Int
+  web_Url        String?
+  github_Url     String
+  done           Boolean      @default(false)
+  image_Url      String
+  average_Rating Int          @default(0)
+  task_SubmissionCount Int @default(0)
+  PaymentSuccess Boolean      @default(false)
+  description    String       @default("asldknasd")
+  submissions    Submission[]
+  developer      Developer    @relation(fields: [developer_Id], references: [id])
+}
+
+model Submission {
+  id           Int       @id @default(autoincrement())
+  validator_Id Int
+  task_Id      Int
+  comment      String?
+  rating       Int       @default(0)
+  task         Task      @relation(fields: [task_Id], references: [id])
+  validator    Validator @relation(fields: [validator_Id], references: [id])
+}
+
+model Payout {
+  id           Int       @id @default(autoincrement())
+  validator_Id Int
+  amount       Int
+  status       String
+  signature    String
+  validator    Validator @relation(fields: [validator_Id], references: [id])
+}

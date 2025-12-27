@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@layer components {
+  .input-web3 {
+    @apply w-full mt-4 p-3 rounded-xl
+    bg-gray-800 text-white
+    border border-purple-500/30
+    focus:outline-none
+    focus:ring-2 focus:ring-purple-500/60
+    focus:border-purple-400
+    transition-all;
+  }
+
+  .input-web3-file {
+    @apply w-full mt-4 p-3 rounded-xl
+    bg-gray-800 text-white
+    border border-purple-500/30;
+  }
+}
+::selection {
+  background: rgba(168, 85, 247, 0.4);
+  color: white;
+}
